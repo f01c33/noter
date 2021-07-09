@@ -1,4 +1,4 @@
-module noter
+module github.com/cauefcr/noter
 
 go 1.16
 
