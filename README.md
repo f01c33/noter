@@ -9,6 +9,5 @@ noter -t "ten minutes from now" take the water out of the stove
 
 # install
 ```
-go get github.com/cauefcr/noter
-go install github.com/cauefcr/noter
+go install github.com/f01c33/noter@latest
 ```
