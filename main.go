@@ -32,7 +32,10 @@ func main() {
 			Files: []uintptr{os.Stdin.Fd(), os.Stdout.Fd(), os.Stderr.Fd()},
 			Sys:   nil,
 		}
-		syscall.ForkExec(tmpfile, append(os.Args, "notforked"), &self)
+		_, err := syscall.ForkExec(tmpfile, append(os.Args, "notforked"), &self)
+		if err != nil {
+			panic(err)
+		}
 		return
 	}
 
@@ -46,7 +49,7 @@ func main() {
 	if len(args) == 0 {
 		return
 	}
-	until := time.Time{}
+	var until time.Time
 	tmr, err := naturaldate.Parse(opts.Until, time.Now(), naturaldate.WithDirection(naturaldate.Future))
 	if err != nil {
 		panic(err)
@@ -55,5 +58,8 @@ func main() {
 
 	msg := strings.Join(args, " ")
 	<-time.NewTimer(time.Until(until)).C
-	beeep.Notify(msg, msg, "")
+	err = beeep.Notify(msg, msg, "")
+	if err != nil {
+		panic(err)
+	}
 }
